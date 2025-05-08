@@ -1,6 +1,69 @@
 -- Run this first
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Script-BananaHub/hatdog/refs/heads/main/nnn", true))()
 
+-- place this in a LocalScript under StarterGui
+local gui = Instance.new("ScreenGui", game.Players.LocalPlayer:WaitForChild("PlayerGui"))
+gui.Name = "SmallPetGui"
+
+local frame = Instance.new("Frame", gui)
+frame.Size = UDim2.new(0, 300, 0, 200)
+frame.Position = UDim2.new(0.5, -150, 0.5, -100)
+frame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+frame.BorderSizePixel = 0
+
+local uistroke = Instance.new("UIStroke", frame)
+uistroke.Color = Color3.fromRGB(255, 255, 255)
+
+local closeBtn = Instance.new("TextButton", frame)
+closeBtn.Size = UDim2.new(0, 30, 0, 30)
+closeBtn.Position = UDim2.new(1, -35, 0, 5)
+closeBtn.Text = "×"
+closeBtn.TextScaled = true
+closeBtn.BackgroundColor3 = Color3.fromRGB(60, 0, 0)
+closeBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+
+closeBtn.MouseButton1Click:Connect(function()
+	frame.Visible = false
+end)
+
+local title = Instance.new("TextLabel", frame)
+title.Size = UDim2.new(1, -40, 0, 30)
+title.Position = UDim2.new(0, 10, 0, 5)
+title.Text = "Supported Pets"
+title.TextColor3 = Color3.fromRGB(255, 255, 255)
+title.BackgroundTransparency = 1
+title.TextXAlignment = Enum.TextXAlignment.Left
+title.Font = Enum.Font.SourceSansBold
+title.TextScaled = true
+
+local scroll = Instance.new("ScrollingFrame", frame)
+scroll.Size = UDim2.new(1, -20, 1, -50)
+scroll.Position = UDim2.new(0, 10, 0, 40)
+scroll.CanvasSize = UDim2.new(0, 0, 0, 400)
+scroll.ScrollBarThickness = 6
+scroll.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+scroll.BorderSizePixel = 0
+
+local uiList = Instance.new("UIListLayout", scroll)
+uiList.SortOrder = Enum.SortOrder.LayoutOrder
+
+local pets = {
+	"Shadow Dragon", "Bat Dragon", "Owl", "Frost Dragon", "Giraffe",
+	"Parrot", "Blue Dog", "Crow", "Arctic Reindeer", "Kangaroo",
+	"Hedgehog", "Cow", "Dalmatian", "Ssbd", "Ccbd",
+	"Frost Fury", "Blazing Lion", "Albino Monkey", "Evil Unicorn", "More..."
+}
+
+for _, pet in ipairs(pets) do
+	local label = Instance.new("TextLabel", scroll)
+	label.Size = UDim2.new(1, 0, 0, 20)
+	label.Text = "• " .. pet
+	label.TextColor3 = Color3.fromRGB(255, 255, 255)
+	label.BackgroundTransparency = 1
+	label.Font = Enum.Font.SourceSans
+	label.TextScaled = true
+end
+
 repeat wait() until game:IsLoaded()
 
 if getgenv().adm then return end
